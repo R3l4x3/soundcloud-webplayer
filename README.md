@@ -1,20 +1,26 @@
-# VueJS SoundCloud Web Player
+# Vue.js SoundCloud Web Player
 
 A SoundCloud Web Player built with VueJS.
 
-## Example
+## Demo
 
 ![Screenshot.png](Screenshot.png)
 
-See a working example here: [https://r3l4x3.github.io/soundcloud-webplayer/](https://r3l4x3.github.io/soundcloud-webplayer/)
+Try out the [demo](https://r3l4x3.github.io/soundcloud-webplayer/)!
 
-## Motivation
+## Inspiration
 
-I wanted to do this web player in VueJS after seeing the version from [shahzeb1](https://github.com/shahzeb1) here https://github.com/shahzeb1/soundcloud-player/
+I wanted to do this web player in Vue.js after seeing the version from [shahzeb1](https://github.com/shahzeb1) here https://github.com/shahzeb1/soundcloud-player/
 
 ## License
 
+Copyright (c) 2017, Sebastian Wilms.
+
 This project is licensed under the terms of the MIT license. See [LICENSE.md](LICENSE.md)
+
+## Built With
+* [Vue.js](https://vuejs.org/) - The JavaScript framework used
+* [bulma.io](http://bulma.io) - The CSS framework used
 
 ## Build Setup
 
