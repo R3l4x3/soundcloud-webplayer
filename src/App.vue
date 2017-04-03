@@ -1,28 +1,26 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <hello></hello>
+    <div class="columns">
+      <div class="column is-6 is-offset-3">
+        <SoundCloudPlayer url="https://soundcloud.com/potionrecords/the-magician-together"></SoundCloudPlayer>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import Hello from './components/Hello';
+  import SoundCloudPlayer from './components/SoundCloudPlayer';
 
-export default {
-  name: 'app',
-  components: {
-    Hello,
-  },
-};
+  export default {
+    name: 'app',
+    components: {
+      SoundCloudPlayer,
+    },
+  };
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="scss">
+  body {
+    padding-top: 3em;
+  }
 </style>
