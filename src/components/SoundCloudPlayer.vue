@@ -1,0 +1,142 @@
+<template>
+  <div>
+    <div id="sc-webplayer" class="card">
+      <header class="card-header">
+        <p class="card-header-title">
+          SoundCloud Web Player
+        </p>
+      </header>
+      <div class="card-content" v-if="content">
+        <div class="media">
+          <div class="media-left">
+            <img :src="song.cover" alt="Image">
+          </div>
+          <div class="media-content">
+            <p class="title is-4">{{song.title}}</p>
+            <p class="subtitle is-6">{{song.artist}}</p>
+            <p class="subtitle is-6">{{ song.created_at }}</p>
+          </div>
+        </div>
+        <div class="content">
+          <p v-html="prettyDescription"></p>
+        </div>
+      </div>
+      <footer class="card-footer">
+        <a class="card-footer-item" @click.prevent="changeSong">New Song</a>
+        <a class="card-footer-item" v-show="running" @click.prevent="toggleSong"><i class="fa fa-pause"
+                                                                                    aria-hidden="true"></i>
+        </a>
+        <a class="card-footer-item" v-show="!running" @click.prevent="toggleSong">
+          <i v-if="!content" class="fa fa-spinner fa-pulse fa-fw is-primary"></i>
+          <i v-if="content" class="fa fa-play" aria-hidden="true"></i>
+        </a>
+      </footer>
+    </div>
+
+    <!--SoundCloud iframe-->
+    <iframe frameborder="0" id="sc-player"
+            :src="songSrc"
+            @load="iFrameLoaded"></iframe>
+
+    <!--New Song Modal-->
+    <div class="modal" :class="newSongModal ? 'is-active' : ''">
+      <div class="modal-background" @click.prevent="newSongModal = false"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">New Song</p>
+          <button class="delete" @click.prevent="newSongModal = false"></button>
+        </header>
+        <section class="modal-card-body">
+          <div class="field has-addons">
+            <p class="control is-expanded">
+              <input class="input" type="text" placeholder="New SoundCloud Song">
+            </p>
+            <p class="control">
+              <a class="button is-info">
+                <i class="fa fa-check" aria-hidden="true"></i>
+              </a>
+            </p>
+          </div>
+        </section>
+      </div>
+    </div>
+
+  </div>
+</template>
+
+<script>
+  import moment from 'moment';
+
+  export default {
+    name: 'soundcloudwebplayer',
+    props: ['url'],
+    data() {
+      return {
+        running: false,
+        content: false,
+        newSongModal: false,
+        player: '',
+        song: {
+          cover: '',
+          title: '',
+          artist: '',
+          permalink_url: '',
+          description: '',
+          created_at: '',
+        },
+      };
+    },
+    mounted() {
+      const iFrame = document.getElementById('sc-player');
+      this.player = SC.Widget(iFrame);
+    },
+    methods: {
+      iFrameLoaded() {
+        this.player.getCurrentSound((song) => {
+          this.content = true;
+          this.song.cover = song.artwork_url;
+          this.song.title = song.title;
+          this.song.artist = song.user.username;
+          this.song.permalink_url = song.permalink_url;
+          this.song.description = song.description;
+          this.song.created_at = moment(song.created_at).format('D MMM YYYY - h:mm a');
+        });
+      },
+      toggleSong() {
+        if (this.running) {
+          this.running = false;
+          this.player.pause();
+        } else {
+          this.running = true;
+          this.player.play();
+        }
+      },
+      changeSong() {
+        this.newSongModal = true;
+      },
+    },
+    computed: {
+      songSrc: function () {
+        const base = 'https://w.soundcloud.com/player/?url=';
+        return base + this.url;
+      },
+      prettyDescription: function () {
+        return this.song.description.replace(/\n/g, '<br>')
+      }
+    },
+    filters: {},
+  };
+</script>
+
+<style lang="scss" scoped>
+  iframe {
+    opacity: 0;
+    display: none;
+  }
+
+  .card .content {
+    max-height: 250px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+</style>
