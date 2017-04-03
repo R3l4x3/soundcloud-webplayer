@@ -110,7 +110,7 @@
     },
     methods: {
       iFrameLoaded() {
-        this.content = false;c
+        this.content = false;
         this.player.getCurrentSound((song) => {
           this.content = true;
           this.song.cover = song.artwork_url;
