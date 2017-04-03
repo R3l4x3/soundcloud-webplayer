@@ -18,6 +18,15 @@
           </div>
         </div>
         <div class="content">
+          <div class="level">
+            <div class="level-item is-narrow" style="margin-right: 1em;">
+              <span>{{progressBarCurrentPosition}}</span>
+            </div>
+            <div class="level-item has-text-centered" id="progressBar">
+              <progress class="progress" :value="song.currentPosition" :max="song.duration"></progress>
+            </div>
+            <div class="level-item is-narrow" style="margin-left: 1em;">{{progressBarDuration}}</div>
+          </div>
           <p v-html="prettyDescription"></p>
         </div>
       </div>
@@ -36,7 +45,7 @@
     <!--SoundCloud iframe-->
     <iframe frameborder="0" id="sc-player"
             :src="songSrc"
-    @load="iFrameLoaded"></iframe>
+            @load="iFrameLoaded"></iframe>
 
     <!--New Song Modal-->
     <div class="modal" :class="newSongModal ? 'is-active' : ''">
@@ -90,9 +99,12 @@
           permalink_url: '',
           description: '',
           created_at: '',
+          duration: 0,
+          currentPosition: 0,
         },
         newUrl: '',
         newUrlNotPassing: false,
+        changePosition: false,
       };
     },
     mounted() {
@@ -107,6 +119,9 @@
         })
         .bind(SC.Widget.Events.PAUSE, () => {
         })
+        .bind(SC.Widget.Events.PLAY_PROGRESS, (e) => {
+          this.song.currentPosition = e.currentPosition;
+        })
     },
     methods: {
       iFrameLoaded() {
@@ -119,6 +134,8 @@
           this.song.permalink_url = song.permalink_url;
           this.song.description = song.description;
           this.song.created_at = moment(song.created_at).format('D MMM YYYY - h:mm a');
+          this.song.duration = song.duration;
+          this.song.currentPosition = 0;
           this.running = false;
         });
       },
@@ -152,7 +169,13 @@
       },
       prettyDescription: function () {
         return this.song.description.replace(/\n/g, '<br>')
-      }
+      },
+      progressBarCurrentPosition: function () {
+        return moment(this.song.currentPosition).format('mm:ss')
+      },
+      progressBarDuration: function () {
+        return moment(this.song.duration).format('mm:ss')
+      },
     },
     filters: {},
   };
@@ -165,9 +188,14 @@
     left: -9999em;
   }
 
-  .card .content {
+  .card .content p {
     max-height: 250px;
     overflow-x: hidden;
     overflow-y: scroll;
   }
+
+  .level-item {
+    font-family: 'Roboto Mono', monospace;
+  }
+
 </style>
