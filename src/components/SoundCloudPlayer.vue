@@ -100,22 +100,17 @@
       this.player = SC.Widget(iFrame);
       this.player
         .bind(SC.Widget.Events.READY, () => {
-//          this.iFrameLoaded()
         })
         .bind(SC.Widget.Events.LOAD_PROGRESS, (a) => {
-          console.log('test')
-          console.log(a)
         })
         .bind(SC.Widget.Events.PLAY, () => {
-          console.log('play');
         })
         .bind(SC.Widget.Events.PAUSE, () => {
-          console.log('pause')
         })
     },
     methods: {
       iFrameLoaded() {
-        this.content = false;
+        this.content = false;c
         this.player.getCurrentSound((song) => {
           this.content = true;
           this.song.cover = song.artwork_url;
