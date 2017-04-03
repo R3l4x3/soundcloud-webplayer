@@ -36,7 +36,7 @@
     <!--SoundCloud iframe-->
     <iframe frameborder="0" id="sc-player"
             :src="songSrc"
-            @load="iFrameLoaded"></iframe>
+    @load="iFrameLoaded"></iframe>
 
     <!--New Song Modal-->
     <div class="modal" :class="newSongModal ? 'is-active' : ''">
@@ -49,14 +49,21 @@
         <section class="modal-card-body">
           <div class="field has-addons">
             <p class="control is-expanded">
-              <input class="input" type="text" placeholder="New SoundCloud Song">
+              <input class="input" type="text" placeholder="New SoundCloud Song" v-model="newUrl">
             </p>
             <p class="control">
-              <a class="button is-info">
-                <i class="fa fa-check" aria-hidden="true"></i>
+              <a class="button is-info" @click.prevent="playNewSong">
+                <span class="icon">
+                  <i class="fa fa-play" aria-hidden="true"></i>
+                </span>
+                <span>Play</span>
               </a>
             </p>
           </div>
+          <p class="help is-danger" v-show="newUrlNotPassing">
+            Enter a valid https://soundcloud.com url<br>
+            Example: https://soundcloud.com/potionrecords/the-magician-together
+          </p>
         </section>
       </div>
     </div>
@@ -84,14 +91,31 @@
           description: '',
           created_at: '',
         },
+        newUrl: '',
+        newUrlNotPassing: false,
       };
     },
     mounted() {
       const iFrame = document.getElementById('sc-player');
       this.player = SC.Widget(iFrame);
+      this.player
+        .bind(SC.Widget.Events.READY, () => {
+//          this.iFrameLoaded()
+        })
+        .bind(SC.Widget.Events.LOAD_PROGRESS, (a) => {
+          console.log('test')
+          console.log(a)
+        })
+        .bind(SC.Widget.Events.PLAY, () => {
+          console.log('play');
+        })
+        .bind(SC.Widget.Events.PAUSE, () => {
+          console.log('pause')
+        })
     },
     methods: {
       iFrameLoaded() {
+        this.content = false;
         this.player.getCurrentSound((song) => {
           this.content = true;
           this.song.cover = song.artwork_url;
@@ -100,6 +124,7 @@
           this.song.permalink_url = song.permalink_url;
           this.song.description = song.description;
           this.song.created_at = moment(song.created_at).format('D MMM YYYY - h:mm a');
+          this.running = false;
         });
       },
       toggleSong() {
@@ -113,6 +138,16 @@
       },
       changeSong() {
         this.newSongModal = true;
+      },
+      playNewSong() {
+        let urlMatch = this.newUrl.match(/^https:\/\/soundcloud\.com\/[a-z1-9\/-]*/)
+        if (urlMatch !== null) {
+          this.newUrlNotPassing = false;
+          this.newSongModal = false;
+          this.player.load(this.newUrl);
+        } else {
+          this.newUrlNotPassing = true;
+        }
       },
     },
     computed: {
@@ -131,7 +166,8 @@
 <style lang="scss" scoped>
   iframe {
     opacity: 0;
-    display: none;
+    position: absolute;
+    left: -9999em;
   }
 
   .card .content {
