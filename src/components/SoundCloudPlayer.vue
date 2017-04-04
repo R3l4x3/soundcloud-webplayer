@@ -23,7 +23,7 @@
               <span>{{progressBarCurrentPosition}}</span>
             </div>
             <div class="level-item has-text-centered" id="progressBar" style="padding: 0 10px;">
-              <progress class="progress" :value="song.currentPosition" :max="song.duration"  v-on:click="console.log('hi')"></progress>
+              <progress class="progress" :value="song.currentPosition" :max="song.duration"  v-on:click="progressClicked($event)" ref="prog"></progress>
             </div>
             <div class="level-item is-narrow has-text-centered">{{progressBarDuration}}</div>
           </div>
@@ -142,6 +142,19 @@
         })
     },
     methods: {
+      /**
+       * Skip to a specific location
+       * when the progress bar is clicked
+       */
+      progressClicked(e){
+        let prog = this.$refs.prog;
+        console.log(prog);
+        let x = e.pageX - prog.offsetLeft - 326, // or e.offsetX (less support, though)
+            y = e.pageY - prog.offsetTop,  // or e.offsetY
+            clickedValue = x * prog.max / prog.offsetWidth;
+        this.song.currentPosition = clickedValue;
+        this.player.seekTo(clickedValue);
+      },
       /**
        * Need to delay getting info
        * for 1 second after iFrame is loaded
