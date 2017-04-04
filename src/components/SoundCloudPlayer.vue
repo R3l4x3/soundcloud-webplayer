@@ -19,13 +19,13 @@
         </div>
         <div class="content">
           <div class="level">
-            <div class="level-item is-narrow" style="margin-right: 1em;">
+            <div class="level-item is-narrow has-text-centered">
               <span>{{progressBarCurrentPosition}}</span>
             </div>
-            <div class="level-item has-text-centered" id="progressBar">
+            <div class="level-item has-text-centered" id="progressBar" style="padding: 0 10px;">
               <progress class="progress" :value="song.currentPosition" :max="song.duration"></progress>
             </div>
-            <div class="level-item is-narrow" style="margin-left: 1em;">{{progressBarDuration}}</div>
+            <div class="level-item is-narrow has-text-centered">{{progressBarDuration}}</div>
           </div>
           <p v-html="prettyDescription"></p>
         </div>
