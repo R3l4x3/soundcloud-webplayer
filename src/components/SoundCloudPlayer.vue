@@ -205,7 +205,12 @@
        */
       checkUrl(url) {
         const pattern = /^https:\/\/soundcloud\.com\/[a-z1-9-]*\/[a-z1-9-]*\/?$/;
-        return url.match(pattern)
+
+        if (url === undefined) {
+          return null
+        } else {
+          return url.match(pattern)
+        }
       },
     },
     computed: {
