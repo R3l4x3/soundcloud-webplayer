@@ -258,4 +258,9 @@
     font-family: 'Roboto Mono', monospace;
   }
 
+  .message-body{
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
 </style>
