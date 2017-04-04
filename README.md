@@ -8,10 +8,11 @@ A SoundCloud Web Player built with Vue.js
 
 Try out the [demo](https://r3l4x3.github.io/soundcloud-webplayer/)!
 
-## Built With
+## Built With / Used
 
 * [Vue.js](https://vuejs.org/) - The JavaScript framework used
 * [bulma.io](http://bulma.io) - The CSS framework used
+* [GitHub Corners](https://github.com/tholman/github-corners) - by Tim Holman
 
 ## Build Setup
 
