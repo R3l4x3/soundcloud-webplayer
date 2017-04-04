@@ -76,7 +76,6 @@
         </section>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -108,25 +107,24 @@
       };
     },
     created() {
+      // Add EventListener for keyup event to handle space bar press
       window.addEventListener('keyup', this.checkKeyPressed, false);
     },
     mounted() {
+      // Get the iframe from document and initialize the SouncCloud Widget
       const iFrame = document.getElementById('sc-player');
       this.player = SC.Widget(iFrame);
+
+      // Bind event to get the current position of the song
       this.player
-        .bind(SC.Widget.Events.READY, () => {
-        })
-        .bind(SC.Widget.Events.LOAD_PROGRESS, (a) => {
-        })
-        .bind(SC.Widget.Events.PLAY, () => {
-        })
-        .bind(SC.Widget.Events.PAUSE, () => {
-        })
         .bind(SC.Widget.Events.PLAY_PROGRESS, (e) => {
           this.song.currentPosition = e.currentPosition;
         })
     },
     methods: {
+      /**
+       * Setup the song object if iframe is loaded
+       */
       iFrameLoaded() {
         this.content = false;
         this.player.getCurrentSound((song) => {
@@ -142,6 +140,9 @@
           this.running = false;
         });
       },
+      /**
+       * Play the song if it is paused and vice versa
+       */
       toggleSong() {
         if (this.running) {
           this.running = false;
@@ -151,9 +152,15 @@
           this.player.play();
         }
       },
+      /**
+       * Open the Modal for a new Song
+       */
       changeSong() {
         this.newSongModal = true;
       },
+      /**
+       * Check the new song url and load the song if it is valid
+       */
       playNewSong() {
         let urlMatch = this.newUrl.match(/^https:\/\/soundcloud\.com\/[a-z1-9\/-]*/)
         if (urlMatch !== null) {
@@ -164,6 +171,10 @@
           this.newUrlNotPassing = true;
         }
       },
+      /**
+       * Toggle song if space bar is pressed
+       * @param e
+       */
       checkKeyPressed(e) {
         if (e.code === "Space") {
           this.toggleSong()
