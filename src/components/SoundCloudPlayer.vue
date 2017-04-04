@@ -107,6 +107,9 @@
         changePosition: false,
       };
     },
+    created() {
+      window.addEventListener('keyup', this.checkKeyPressed, false);
+    },
     mounted() {
       const iFrame = document.getElementById('sc-player');
       this.player = SC.Widget(iFrame);
@@ -159,6 +162,11 @@
           this.player.load(this.newUrl);
         } else {
           this.newUrlNotPassing = true;
+        }
+      },
+      checkKeyPressed(e) {
+        if (e.code === "Space") {
+          this.toggleSong()
         }
       },
     },
