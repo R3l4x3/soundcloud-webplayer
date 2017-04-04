@@ -23,7 +23,7 @@
               <span>{{progressBarCurrentPosition}}</span>
             </div>
             <div class="level-item has-text-centered" id="progressBar" style="padding: 0 10px;">
-              <progress class="progress" :value="song.currentPosition" :max="song.duration"></progress>
+              <progress class="progress" :value="song.currentPosition" :max="song.duration"  v-on:click="console.log('hi')"></progress>
             </div>
             <div class="level-item is-narrow has-text-centered">{{progressBarDuration}}</div>
           </div>
@@ -56,7 +56,7 @@
     <!--SoundCloud iframe-->
     <iframe frameborder="0" id="sc-player"
             :src="songSrc"
-            @load="iFrameLoaded"></iframe>
+            @load="iFramePreLoad"></iframe>
 
     <!--New Song Modal-->
     <div class="modal" :class="newSongModal ? 'is-active' : ''">
@@ -142,6 +142,15 @@
         })
     },
     methods: {
+      /**
+       * Need to delay getting info
+       * for 1 second after iFrame is loaded
+       * to prevent async issues
+       */
+      iFramePreLoad(){
+        let vm = this;
+        setTimeout(vm.iFrameLoaded, 1000);
+      },
       /**
        * Setup the song object if iframe is loaded
        */
