@@ -48,7 +48,7 @@
         <div class="message-body">
           <strong>Pro Tip!</strong>
           You can open this player and provide a song with a url query parameter.<br>
-          Example: <a :href="baseUrl + '/?url=https://soundcloud.com/jaidencollisbootlegs2/danceoff'">{{ baseUrl }}/?url=https://soundcloud.com/jaidencollisbootlegs2/danceoff</a>
+          Example: <a :href="baseUrl + '?url=https://soundcloud.com/jaidencollisbootlegs2/danceoff'">{{ baseUrl }}?url=https://soundcloud.com/jaidencollisbootlegs2/danceoff</a>
         </div>
       </article>
     </section>
@@ -125,8 +125,9 @@
       window.addEventListener('keyup', this.checkKeyPressed, false);
 
       let url = uri(window.location.href);
+      console.log(url);
       // save url without parameters
-      this.baseUrl = url.protocol() + '://' + url.host();
+      this.baseUrl = url.protocol() + '://' + url.host() + url.path();
       // Look for a 'url' query parameter
       this.urlParams = url.search(true)
     },
