@@ -12,6 +12,7 @@
   "dependencies": {
     "axios": "^0.16.0",
     "moment": "^2.18.1",
+    "urijs": "^1.18.10",
     "vue": "^2.2.2"
   },
   "devDependencies": {

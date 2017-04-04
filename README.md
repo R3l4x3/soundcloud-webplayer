@@ -8,11 +8,19 @@ A SoundCloud Web Player built with Vue.js
 
 Try out the [demo](https://r3l4x3.github.io/soundcloud-webplayer/)!
 
+## How to use
+
+Simply [open the player](https://r3l4x3.github.io/soundcloud-webplayer/) in your browser.  
+
+In addition you can provide a url query parameter with `?url=https://soundcloud.com/jaidencollisbootlegs2/danceoff`.   
+For Example: https://r3l4x3.github.io/soundcloud-webplayer/?url=https://soundcloud.com/jaidencollisbootlegs2/danceoff
+
 ## Built With / Used
 
 * [Vue.js](https://vuejs.org/) - The JavaScript framework used
 * [bulma.io](http://bulma.io) - The CSS framework used
 * [GitHub Corners](https://github.com/tholman/github-corners) - by Tim Holman
+* [URI.js](https://github.com/medialize/URI.js) - Javascript URL mutation library
 
 ## Build Setup
 
