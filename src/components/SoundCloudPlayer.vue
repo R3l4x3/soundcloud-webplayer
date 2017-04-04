@@ -42,6 +42,17 @@
       </footer>
     </div>
 
+    <!--Tip Section-->
+    <section class="section">
+      <article class="message is-info">
+        <div class="message-body">
+          <strong>Pro Tip!</strong>
+          You can open this player and provide a song with a url query parameter.<br>
+          Example: <a :href="baseUrl + '/?url=https://soundcloud.com/jaidencollisbootlegs2/danceoff'">{{ baseUrl }}/?url=https://soundcloud.com/jaidencollisbootlegs2/danceoff</a>
+        </div>
+      </article>
+    </section>
+
     <!--SoundCloud iframe-->
     <iframe frameborder="0" id="sc-player"
             :src="songSrc"
@@ -61,7 +72,7 @@
               <input class="input" type="text" placeholder="New SoundCloud Song" v-model="newUrl">
             </p>
             <p class="control">
-              <a class="button is-info" @click.prevent="playNewSong">
+              <a class="button is-primary" @click.prevent="playNewSong">
                 <span class="icon">
                   <i class="fa fa-play" aria-hidden="true"></i>
                 </span>
@@ -81,6 +92,7 @@
 
 <script>
   import moment from 'moment';
+  import uri from 'urijs';
 
   export default {
     name: 'soundcloudwebplayer',
@@ -104,11 +116,19 @@
         newUrl: '',
         newUrlNotPassing: false,
         changePosition: false,
+        urlParams: {},
+        baseUrl: '',
       };
     },
     created() {
       // Add EventListener for keyup event to handle space bar press
       window.addEventListener('keyup', this.checkKeyPressed, false);
+
+      let url = uri(window.location.href);
+      // save url without parameters
+      this.baseUrl = url.protocol() + '://' + url.host();
+      // Look for a 'url' query parameter
+      this.urlParams = url.search(true)
     },
     mounted() {
       // Get the iframe from document and initialize the SouncCloud Widget
@@ -162,8 +182,7 @@
        * Check the new song url and load the song if it is valid
        */
       playNewSong() {
-        let urlMatch = this.newUrl.match(/^https:\/\/soundcloud\.com\/[a-z1-9\/-]*/)
-        if (urlMatch !== null) {
+        if (this.checkUrl(this.newUrl) !== null) {
           this.newUrlNotPassing = false;
           this.newSongModal = false;
           this.player.load(this.newUrl);
@@ -180,11 +199,28 @@
           this.toggleSong()
         }
       },
+      /**
+       * Check if the provided url has the right format
+       * @param {string} url - SoundCloud Song Url
+       */
+      checkUrl(url) {
+        const pattern = /^https:\/\/soundcloud\.com\/[a-z1-9-]*\/[a-z1-9-]*\/?$/;
+        return url.match(pattern)
+      },
     },
     computed: {
       songSrc: function () {
+        let url = "";
+
+        // Check if url has a url query parameter
+        if (this.urlParams.url !== "" && this.checkUrl(this.urlParams.url) !== null) {
+          url = this.urlParams.url
+        } else {
+          url = this.url
+        }
+
         const base = 'https://w.soundcloud.com/player/?url=';
-        return base + this.url;
+        return base + url;
       },
       prettyDescription: function () {
         return this.song.description.replace(/\n/g, '<br>')
