@@ -4,7 +4,7 @@ A SoundCloud Web Player built with Vue.js
 
 ## Demo
 
-![Screenshot.png](Screenshot.png)
+![Screenshot.png](Screenshot.png) 
 
 Try out the [demo](https://r3l4x3.github.io/soundcloud-webplayer/)!
 
