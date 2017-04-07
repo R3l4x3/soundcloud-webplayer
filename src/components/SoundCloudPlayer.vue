@@ -82,7 +82,7 @@
           </div>
           <p class="help is-danger" v-show="newUrlNotPassing">
             Enter a valid https://soundcloud.com url<br>
-            Example: https://soundcloud.com/potionrecords/the-magician-together
+            Example: https://soundcloud.com/jaidencollisbootlegs2/danceoff
           </p>
         </section>
       </div>
