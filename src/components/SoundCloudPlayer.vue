@@ -56,7 +56,7 @@
     <!--SoundCloud iframe-->
     <iframe frameborder="0" id="sc-player"
             :src="songSrc"
-            @load="iFrameLoaded"></iframe>
+            @load="iFramePreLoad"></iframe>
 
     <!--New Song Modal-->
     <div class="modal" :class="newSongModal ? 'is-active' : ''">
@@ -142,6 +142,14 @@
         })
     },
     methods: {
+      /**
+       * Need to delay getting info
+       * for 1 second after iFrame is loaded
+       * to prevent async issues
+       */
+      iFramePreLoad(){
+        setTimeout(this.iFrameLoaded, 1000);
+      },
       /**
        * Setup the song object if iframe is loaded
        */
@@ -256,6 +264,11 @@
 
   .level-item {
     font-family: 'Roboto Mono', monospace;
+  }
+
+  .message-body{
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 
 </style>
