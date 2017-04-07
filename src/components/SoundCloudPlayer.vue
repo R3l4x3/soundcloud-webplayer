@@ -191,6 +191,7 @@
        */
       playNewSong() {
         if (this.checkUrl(this.newUrl) !== null) {
+          this.content = false;
           this.newUrlNotPassing = false;
           this.newSongModal = false;
           this.player.load(this.newUrl);
