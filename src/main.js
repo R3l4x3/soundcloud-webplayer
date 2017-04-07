@@ -2,6 +2,10 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 import App from './App';
+import 'vue-nouislider/dist/vue-nouislider.css'
+import VueNoUiSlider from 'vue-nouislider/dist/vue-nouislider.common'
+
+Vue.use(VueNoUiSlider)
 
 Vue.config.productionTip = false;
 
