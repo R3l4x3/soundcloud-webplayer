@@ -18,14 +18,16 @@
           </div>
         </div>
         <div class="content">
-          <div class="level">
-            <div class="level-item is-narrow has-text-centered">
-              <span>{{progressBarCurrentPosition}}</span>
+          <!--<nouislider></nouislider>-->
+
+          <div class="columns" id="progressBarWrapper">
+            <div class="column is-narrow has-text-centered">
+              <span>{{ progressBarCurrentPosition }}</span>
             </div>
-            <div class="level-item has-text-centered" id="progressBar" style="padding: 0 10px;">
-              <progress class="progress" :value="song.currentPosition" :max="song.duration"></progress>
+            <div class="column is-fullwidth" id="progressBar">
+              <nouislider :config="progressSlider.config" :values="progressSlider.values"></nouislider>
             </div>
-            <div class="level-item is-narrow has-text-centered">{{progressBarDuration}}</div>
+            <div class="column is-narrow has-text-centered">{{progressBarDuration}}</div>
           </div>
           <p v-html="prettyDescription"></p>
         </div>
@@ -48,7 +50,8 @@
         <div class="message-body">
           <strong>Pro Tip!</strong>
           You can open this player and provide a song with a url query parameter.<br><br>
-          Example: <br><a :href="baseUrl + '?url=https://soundcloud.com/jaidencollisbootlegs2/danceoff'">{{ baseUrl }}?url=https://soundcloud.com/jaidencollisbootlegs2/danceoff</a>
+          Example: <br><a :href="baseUrl + '?url=https://soundcloud.com/jaidencollisbootlegs2/danceoff'">{{ baseUrl
+          }}?url=https://soundcloud.com/jaidencollisbootlegs2/danceoff</a>
         </div>
       </article>
     </section>
@@ -93,6 +96,7 @@
 <script>
   import moment from 'moment';
   import uri from 'urijs';
+  import VueNouislider from 'vue-nouislider/dist/vue-nouislider.common';
 
   export default {
     name: 'soundcloudwebplayer',
@@ -118,6 +122,7 @@
         changePosition: false,
         urlParams: {},
         baseUrl: '',
+        progressSlider: {},
       };
     },
     created() {
@@ -140,7 +145,19 @@
         .bind(SC.Widget.Events.PLAY_PROGRESS, (e) => {
           this.song.currentPosition = e.currentPosition;
         })
+
+      this.$on('newValueSet', (newValue) => {
+        this.player.seekTo(newValue[0])
+      })
+
     },
+
+    watch: {
+      progressBarCurrentPosition: function() {
+        this.$emit('updateValue', this.song.currentPosition)
+      }
+    },
+
     methods: {
       /**
        * Need to delay getting info
@@ -166,6 +183,19 @@
           this.song.duration = song.duration;
           this.song.currentPosition = 0;
           this.running = false;
+
+          this.progressSlider = {
+            config: {
+              connect: [true, false],
+              range: {
+                'min': 0,
+                'max': song.duration
+              }
+            },
+            behaviour: 'tap-drag',
+            values: [0],
+            id: 'slider-342',
+          }
         });
       },
       /**
@@ -194,6 +224,7 @@
           this.newUrlNotPassing = false;
           this.newSongModal = false;
           this.player.load(this.newUrl);
+          this.content = false;
         } else {
           this.newUrlNotPassing = true;
         }
@@ -262,7 +293,7 @@
     overflow-y: scroll;
   }
 
-  .level-item {
+  #progressBarWrapper {
     font-family: 'Roboto Mono', monospace;
   }
 
