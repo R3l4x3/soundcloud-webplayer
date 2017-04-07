@@ -13,7 +13,8 @@
     "axios": "^0.16.0",
     "moment": "^2.18.1",
     "urijs": "^1.18.10",
-    "vue": "^2.2.2"
+    "vue": "^2.2.2",
+    "vue-nouislider": "1.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",

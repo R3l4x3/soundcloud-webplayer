@@ -23,7 +23,7 @@ For Example:
 * [Vue.js](https://vuejs.org/) - The JavaScript framework used
 * [bulma.io](http://bulma.io) - The CSS framework used
 * [GitHub Corners](https://github.com/tholman/github-corners) - by Tim Holman
-* [URI.js](https://github.com/medialize/URI.js) - Javascript URL mutation library
+* [Vue.js NoUiSlider](https://github.com/R3l4x3/vue-nouislider) - Another project of mine
 
 ## Build Setup
 
