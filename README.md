@@ -1,4 +1,4 @@
-# Vue.js SoundCloud Web Player
+# Vue.js SoundCloud Web Player ([Check it out](https://shahzeb1.github.io/soundcloud-webplayer/))
 
 A SoundCloud Web Player built with Vue.js
 
