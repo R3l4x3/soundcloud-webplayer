@@ -18,8 +18,6 @@
           </div>
         </div>
         <div class="content">
-          <!--<nouislider></nouislider>-->
-
           <div class="columns" id="progressBarWrapper">
             <div class="column is-narrow has-text-centered">
               <span>{{ progressBarCurrentPosition }}</span>
@@ -194,7 +192,6 @@
             },
             behaviour: 'tap-drag',
             values: [0],
-            id: 'slider-342',
           }
         });
       },
