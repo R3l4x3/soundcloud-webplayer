@@ -55,7 +55,7 @@
     </section>
 
     <!--SoundCloud iframe-->
-    <iframe frameborder="0" id="sc-player"
+    <iframe frameborder="0" allow="autoplay" id="sc-player"
             :src="songSrc"
             @load="iFramePreLoad"></iframe>
 
