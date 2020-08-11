@@ -10,7 +10,7 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
-    "axios": "^0.16.0",
+    "axios": "^0.19.2",
     "moment": "^2.18.1",
     "urijs": "^1.18.10",
     "vue": "^2.2.2",
