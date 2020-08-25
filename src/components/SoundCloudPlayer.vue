@@ -50,10 +50,12 @@
     <section class="section">
       <article class="message is-info">
         <div class="message-body">
-          <strong>Pro Tip!</strong>
-          You can open this player and provide a song with a url query parameter.<br><br>
-          Example: <br><a :href="baseUrl + '?url=https://soundcloud.com/jaidencollisbootlegs2/danceoff'">{{ baseUrl
-          }}?url=https://soundcloud.com/jaidencollisbootlegs2/danceoff</a>
+          <h3>Next Tracks:</h3>
+          <li v-for="track in playlist" :key="track.id">
+            {{ track.scUrl }}
+          </li>
+
+
         </div>
       </article>
     </section>
@@ -110,6 +112,16 @@
         content: false,
         newSongModal: false,
         player: '',
+        playlist: [
+          {  
+            id: 1,
+            scUrl: 'https://soundcloud.com/trndmusik/uberhaupt-auserdem-sunshine-trndmsk'
+          },
+          {  
+            id: 2,
+            scUrl: 'https://soundcloud.com/trndmusik/benis-johannes-blauregen'
+          }
+        ],
         song: {
           cover: '',
           title: '',
