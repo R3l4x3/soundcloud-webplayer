@@ -23,7 +23,7 @@
               <span>{{ progressBarCurrentPosition }}</span>
             </div>
             <div class="column is-fullwidth" id="progressBar">
-              <nouislider :config="progressSlider.config" :values="progressSlider.values"></nouislider>
+              <!-- <nouislider :config="progressSlider.config" :values="progressSlider.values"></nouislider> -->
             </div>
             <div class="column is-narrow has-text-centered">{{progressBarDuration}}</div>
           </div>
@@ -38,6 +38,10 @@
         <a class="card-footer-item" v-show="!running" @click.prevent="toggleSong">
           <i v-if="!content" class="fa fa-spinner fa-pulse fa-fw is-primary"></i>
           <i v-if="content" class="fa fa-play" aria-hidden="true"></i>
+        </a>
+        <a class="card-footer-item" v-show="!running" @click.prevent="playNewSong">
+          <i v-if="!content" class="fa fa-spinner fa-pulse fa-fw is-primary"></i>
+          <i v-if="content" class="fa fa-angle-right" aria-hidden="true"></i>
         </a>
       </footer>
     </div>
@@ -85,6 +89,7 @@
             Enter a valid https://soundcloud.com url<br>
             Example: https://soundcloud.com/potionrecords/the-magician-together
           </p>
+          
         </section>
       </div>
     </div>
@@ -94,7 +99,7 @@
 <script>
   import moment from 'moment';
   import uri from 'urijs';
-  import VueNouislider from 'vue-nouislider/dist/vue-nouislider.common';
+  //import VueNouislider from 'vue-nouislider/dist/vue-nouislider.common';
 
   export default {
     name: 'soundcloudwebplayer',
@@ -153,6 +158,10 @@
     watch: {
       progressBarCurrentPosition: function() {
         this.$emit('updateValue', this.song.currentPosition)
+        console.log( this.song.duration - this.song.currentPosition )
+        if (this.song.duration - this.song.currentPosition <= 200){
+          console.log('end')
+        }
       }
     },
 
@@ -217,11 +226,17 @@
        * Check the new song url and load the song if it is valid
        */
       playNewSong() {
+        //place soundcloud url from telegram
+        this.newUrl = 'https://soundcloud.com/trndmusik/uberhaupt-auserdem-sunshine-trndmsk'
         if (this.checkUrl(this.newUrl) !== null) {
           this.newUrlNotPassing = false;
           this.newSongModal = false;
           this.player.load(this.newUrl);
-          this.content = false;
+          setTimeout(() =>{
+            console.log('now')
+            this.toggleSong()
+          }, 3000)
+          
         } else {
           this.newUrlNotPassing = true;
         }
@@ -270,7 +285,9 @@
         return moment(this.song.currentPosition).format('mm:ss')
       },
       progressBarDuration: function () {
+        
         return moment(this.song.duration).format('mm:ss')
+
       },
     },
     filters: {},
