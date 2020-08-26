@@ -9,6 +9,7 @@
 </template>
 
 <script>
+
   import SoundCloudPlayer from './components/SoundCloudPlayer';
   import { store } from './store/store'
 
@@ -18,6 +19,24 @@
     components: {
       SoundCloudPlayer, 
     },
+    data: function(){
+      return {
+        connection: null
+      }
+    },
+    created: function(){
+      console.log('Start connecting to websocket')
+      this.connection = new WebSocket("wss://echo.websocket.org")
+
+      this.connection.onopen = function (event) {
+        console.log(event)
+        console.log("Successfully connected")
+      }
+
+      this.connection.onmessage = function (event) {
+        console.log(event)
+      }
+    }
   };
 </script>
 
