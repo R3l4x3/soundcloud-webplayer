@@ -2,8 +2,22 @@ const express = require('express')
 const app = express()
 const port = 3000
 
-app.get('/', (req, res) => {
-  res.send('Hellos World!')
+app.get('/playlist', (request, response) => {
+    let playlist = [
+        {
+            id: '1',
+            date: 'june',
+            from: 'benny',
+            scUrl: 'testUrl'
+        },
+        {
+            id: '2',
+            date: 'aug',
+            from: 'aina',
+            scUrl: 'testUrl'
+        }
+    ]
+    response.send(playlist)
 })
 
 app.listen(port, () => {
