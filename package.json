@@ -16,7 +16,8 @@
     "urijs": "^1.18.10",
     "vue": "^2.2.2",
     "vue-axios": "^2.1.5",
-    "vue-nouislider": "1.0.1"
+    "vue-nouislider": "1.0.1",
+    "vue-socket.io": "^3.0.10"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",
