@@ -173,8 +173,11 @@
       progressBarCurrentPosition: function() {
         this.$emit('updateValue', this.song.currentPosition)
         console.log( this.song.duration - this.song.currentPosition )
-        if (this.song.duration - this.song.currentPosition <= 200){
-          console.log('end')
+        if (this.song.duration - this.song.currentPosition <= 300){
+          this.playlist[0].played = true
+          this.playlist.shift()
+          
+          this.playNewSong()
         }
       }
     },
@@ -241,7 +244,6 @@
        */
       playNewSong() {
         //place soundcloud url from telegramm
-        var i;
         this.newUrl = this.playlist[0].scUrl
         console.log(this.newUrl)
 
