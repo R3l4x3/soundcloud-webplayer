@@ -1,5 +1,12 @@
 <template>
   <div>
+    <div>
+      <label for="flavor">Favorite ice cream flavor?</label>
+      <input @input="changed" name="flavor">
+    </div>
+    <div>
+      <p>You chose {{ $store.getters.flavor }}</p>
+    </div>
     <div id="sc-webplayer" class="card">
       <header class="card-header">
         <p class="card-header-title">
@@ -288,6 +295,9 @@
         }).catch(err => {
           console.log('err: ', err)
         }) 
+      },
+      changed: function(event) {
+        this.$store.commit('change', event.target.value)
       }
     },
     computed: {
