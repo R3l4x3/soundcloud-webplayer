@@ -14,7 +14,7 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
-    flavor: ''
+    flavor: 'testurl'
   },
   mutations: {
     change(state, flavor) {

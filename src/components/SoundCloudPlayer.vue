@@ -289,13 +289,13 @@
           return url.match(pattern)
         }
       },
-      getPlaylist(){
-        this.$axios.get('http://localhost:3000/playlist').then(response => {
-          console.log('response: ', response)
-        }).catch(err => {
-          console.log('err: ', err)
-        }) 
-      },
+      // getPlaylist(){
+      //   this.$axios.get('http://localhost:3000/playlist').then(response => {
+      //     console.log('response: ', response)
+      //   }).catch(err => {
+      //     console.log('err: ', err)
+      //   }) 
+      // },
       changed: function(event) {
         this.$store.commit('change', event.target.value)
       }

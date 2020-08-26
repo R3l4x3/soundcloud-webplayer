@@ -1,25 +1,27 @@
-var app = require('express')();
-var http = require('http').createServer(app);
-var io = require('socket.io')(http);
 
-// const express = require('express')
-// const app = express()
-const port = 3000
+const express = require('express');
+
+
+const app = express();
 
 const TelegramBot = require('node-telegram-bot-api')
 const token = '';
 const bot = new TelegramBot(token, {polling: true})
 
-app.get('/playlist', (request, response) => {
-    response.set('Access-Control-Allow-Origin', '*')
-    let playlist = []
-    // {
-    //     id: '1',
-    //     date: 'june',
-    //     from: 'benny',
-    //     scUrl: 'testUrl'
-    // }
-    
+const server = app.listen(3000, function() {
+    console.log('server running on port 3000');
+});
+
+
+const io = require('socket.io')(server);
+
+io.on('connection', function(socket) {
+    console.log('connected:',socket.id)
+    socket.on('SEND_MESSAGE', function(data) {
+        io.emit('MESSAGE', data)
+
+    });
+
     bot.on('message', (msg) => {
         var urlExists = require('url-exists');
         var checkSoundcloud = "soundcloud";
@@ -38,13 +40,4 @@ app.get('/playlist', (request, response) => {
         } 
             
     });
-    response.send(playlist)
-})
-
-io.on('connection', (socket) => {
-    console.log('a user connected');
-  });
-
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
-})
+});

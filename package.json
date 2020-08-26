@@ -13,6 +13,7 @@
     "axios": "^0.19.2",
     "moment": "^2.18.1",
     "node-telegram-bot-api": "^0.50.0",
+    "socket.io-client": "^2.3.0",
     "urijs": "^1.18.10",
     "vue": "^2.2.2",
     "vue-axios": "^2.1.5",
