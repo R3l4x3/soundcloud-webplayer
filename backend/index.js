@@ -23,10 +23,20 @@ app.get('/playlist', (request, response) => {
     ]
     
     bot.on('message', (msg) => {
-    
-        var Hi = "hi";
-        if (msg.text.toString().toLowerCase().indexOf(Hi) === 0) {
-        bot.sendMessage(msg.chat.id,"Hello dear user");
+        var urlExists = require('url-exists');
+        var checkSoundcloud = "soundcloud";
+        
+        if (msg.text.includes('soundcloud')) {
+            urlExists(msg.text, function(err, exists) {
+            console.log(exists); // true
+
+            if (exists== true){
+                console.log('url-is valid')
+                bot.sendMessage(msg.chat.id,"Hello dear user");
+            }
+
+            });
+            
             
         } 
             
