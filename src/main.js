@@ -5,6 +5,7 @@ import App from './App';
 import 'vue-nouislider/dist/vue-nouislider.css'
 import VueNoUiSlider from 'vue-nouislider/dist/vue-nouislider.common'
 
+
 Vue.use(VueNoUiSlider)
 
 Vue.config.productionTip = false;
