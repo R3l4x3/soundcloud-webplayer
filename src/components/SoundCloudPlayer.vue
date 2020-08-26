@@ -115,11 +115,13 @@
         playlist: [
           {  
             id: 1,
-            scUrl: 'https://soundcloud.com/trndmusik/uberhaupt-auserdem-sunshine-trndmsk'
+            scUrl: 'https://soundcloud.com/trndmusik/uberhaupt-auserdem-sunshine-trndmsk',
+            played: false
           },
           {  
             id: 2,
-            scUrl: 'https://soundcloud.com/trndmusik/benis-johannes-blauregen'
+            scUrl: 'https://soundcloud.com/trndmusik/benis-johannes-blauregen',
+            played: false
           }
         ],
         song: {
@@ -238,8 +240,11 @@
        * Check the new song url and load the song if it is valid
        */
       playNewSong() {
-        //place soundcloud url from telegram
-        this.newUrl = 'https://soundcloud.com/trndmusik/uberhaupt-auserdem-sunshine-trndmsk'
+        //place soundcloud url from telegramm
+        var i;
+        this.newUrl = this.playlist[0].scUrl
+        console.log(this.newUrl)
+
         if (this.checkUrl(this.newUrl) !== null) {
           this.newUrlNotPassing = false;
           this.newSongModal = false;
