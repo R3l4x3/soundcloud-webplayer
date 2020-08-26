@@ -15,6 +15,7 @@
     "node-telegram-bot-api": "^0.50.0",
     "urijs": "^1.18.10",
     "vue": "^2.2.2",
+    "vue-axios": "^2.1.5",
     "vue-nouislider": "1.0.1"
   },
   "devDependencies": {
