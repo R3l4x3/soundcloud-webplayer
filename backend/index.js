@@ -2,6 +2,10 @@ const express = require('express')
 const app = express()
 const port = 3000
 
+const TelegramBot = require('node-telegram-bot-api')
+const token = '';
+const bot = new TelegramBot(token, {polling: true})
+
 app.get('/playlist', (request, response) => {
     let playlist = [
         {
@@ -17,6 +21,16 @@ app.get('/playlist', (request, response) => {
             scUrl: 'testUrl'
         }
     ]
+    
+    bot.on('message', (msg) => {
+    
+        var Hi = "hi";
+        if (msg.text.toString().toLowerCase().indexOf(Hi) === 0) {
+        bot.sendMessage(msg.chat.id,"Hello dear user");
+            
+        } 
+            
+    });
     response.send(playlist)
 })
 
