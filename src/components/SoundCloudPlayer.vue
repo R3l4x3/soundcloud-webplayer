@@ -282,6 +282,13 @@
           return url.match(pattern)
         }
       },
+      getPlaylist(){
+        this.$axios.get('http://localhost:3000/playlist').then(response => {
+          console.log('response: ', response)
+        }).catch(err => {
+          console.log('err: ', err)
+        }) 
+      }
     },
     computed: {
       songSrc: function () {
