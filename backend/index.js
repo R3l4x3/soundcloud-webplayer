@@ -1,5 +1,9 @@
-const express = require('express')
-const app = express()
+var app = require('express')();
+var http = require('http').createServer(app);
+var io = require('socket.io')(http);
+
+// const express = require('express')
+// const app = express()
 const port = 3000
 
 const TelegramBot = require('node-telegram-bot-api')
@@ -7,6 +11,7 @@ const token = '';
 const bot = new TelegramBot(token, {polling: true})
 
 app.get('/playlist', (request, response) => {
+    response.set('Access-Control-Allow-Origin', '*')
     let playlist = []
     // {
     //     id: '1',
@@ -35,6 +40,10 @@ app.get('/playlist', (request, response) => {
     });
     response.send(playlist)
 })
+
+io.on('connection', (socket) => {
+    console.log('a user connected');
+  });
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
