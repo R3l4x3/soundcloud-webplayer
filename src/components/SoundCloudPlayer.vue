@@ -169,11 +169,14 @@
       })
 
       this.socket.on('MESSAGE', (data) => {
-
           this.playlist = [...this.playlist, data];
-          this.playlist.push(data)
+          //this.playlist.push(data)
           // this.messages.push(data)
           console.log(data)
+          this.socket.emit('SEND_MESSAGE', {
+              added: true
+          });
+          this.message = ''
       })
 
     },
@@ -183,7 +186,6 @@
         this.$emit('updateValue', this.song.currentPosition)
         console.log( this.song.duration - this.song.currentPosition )
         if (this.song.duration - this.song.currentPosition <= 300){
-          this.playlist[0].played = true
           this.playlist.shift()
           
           this.playNewSong()
