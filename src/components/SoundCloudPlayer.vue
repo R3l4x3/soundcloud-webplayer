@@ -109,6 +109,7 @@
   import moment from 'moment';
   import uri from 'urijs';
   //import VueNouislider from 'vue-nouislider/dist/vue-nouislider.common';
+  import io from 'socket.io-client'
 
   export default {
     name: 'soundcloudwebplayer',
@@ -118,19 +119,12 @@
         running: false,
         content: false,
         newSongModal: false,
+        user: '',
+        message: '',
+        messages: [],
+        socket: io('localhost:3000'),
         player: '',
-        playlist: [
-          {  
-            id: 1,
-            scUrl: 'https://soundcloud.com/trndmusik/uberhaupt-auserdem-sunshine-trndmsk',
-            played: false
-          },
-          {  
-            id: 2,
-            scUrl: 'https://soundcloud.com/trndmusik/benis-johannes-blauregen',
-            played: false
-          }
-        ],
+        playlist: [],
         song: {
           cover: '',
           title: '',
@@ -168,10 +162,20 @@
       this.player
         .bind(SC.Widget.Events.PLAY_PROGRESS, (e) => {
           this.song.currentPosition = e.currentPosition;
-        })
+      })
 
       this.$on('newValueSet', (newValue) => {
         this.player.seekTo(newValue[0])
+      })
+
+      this.socket.on('MESSAGE', (data) => {
+
+          this.playlist = [...this.playlist, data];
+          this.playlist.push({
+            scUrl: data
+          })
+          // this.messages.push(data)
+          console.log(data)
       })
 
     },
