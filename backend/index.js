@@ -5,7 +5,7 @@ const express = require('express');
 const app = express();
 
 const TelegramBot = require('node-telegram-bot-api')
-const token = '';
+const token = '1';
 const bot = new TelegramBot(token, {polling: true})
 
 const server = app.listen(3000, function() {
@@ -25,7 +25,7 @@ io.on('connection', function(socket) {
     bot.on('message', (msg) => {
         var urlExists = require('url-exists');
         var checkSoundcloud = "soundcloud";
-        var checkBeforeSend = '';
+        var checkBeforeSend;
         
         if (msg.text.includes('soundcloud')) {
             urlExists(msg.text, function(err, exists) {

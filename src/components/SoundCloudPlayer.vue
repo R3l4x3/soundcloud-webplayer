@@ -57,9 +57,9 @@
     <section class="section">
       <article class="message is-info">
         <div class="message-body">
-          <h3>Next Tracks:</h3>
+          <h3>Tracklist:</h3>
           <li v-for="track in playlist" :key="track.id">
-            {{ track.scUrl }}
+            {{ track }}
           </li>
 
 
@@ -171,9 +171,7 @@
       this.socket.on('MESSAGE', (data) => {
 
           this.playlist = [...this.playlist, data];
-          this.playlist.push({
-            scUrl: data
-          })
+          this.playlist.push(data)
           // this.messages.push(data)
           console.log(data)
       })
@@ -255,7 +253,7 @@
        */
       playNewSong() {
         //place soundcloud url from telegramm
-        this.newUrl = this.playlist[0].scUrl
+        this.newUrl = this.playlist[0]
         console.log(this.newUrl)
 
         if (this.checkUrl(this.newUrl) !== null) {
