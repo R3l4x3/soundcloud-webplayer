@@ -1,12 +1,5 @@
 <template>
   <div>
-    <div>
-      <label for="flavor">Favorite ice cream flavor?</label>
-      <input @input="changed" name="flavor">
-    </div>
-    <div>
-      <p>You chose {{ $store.getters.flavor }}</p>
-    </div>
     <div id="sc-webplayer" class="card">
       <header class="card-header">
         <p class="card-header-title">
@@ -124,7 +117,7 @@
         messages: [],
         socket: io('localhost:3000'),
         player: '',
-        playlist: [],
+        playlist: ['https://soundcloud.com/trndmusik/uberhaupt-auserdem-sunshine-trndmsk'],
         song: {
           cover: '',
           title: '',
@@ -185,7 +178,7 @@
       progressBarCurrentPosition: function() {
         this.$emit('updateValue', this.song.currentPosition)
         console.log( this.song.duration - this.song.currentPosition )
-        if (this.song.duration - this.song.currentPosition <= 300){
+        if (this.song.duration - this.song.currentPosition <= 1000){
           this.playlist.shift()
           
           this.playNewSong()
@@ -257,8 +250,9 @@
         //place soundcloud url from telegramm
         this.newUrl = this.playlist[0]
         console.log(this.newUrl)
-
-        if (this.checkUrl(this.newUrl) !== null) {
+        console.log(this.checkUrl(this.newUrl))
+        //if (this.checkUrl(this.newUrl) !== null) {
+          console.log('after if')
           this.newUrlNotPassing = false;
           this.newSongModal = false;
           this.player.load(this.newUrl);
@@ -267,9 +261,9 @@
             this.toggleSong()
           }, 3000)
           
-        } else {
-          this.newUrlNotPassing = true;
-        }
+        // } else {
+        //   this.newUrlNotPassing = true;
+        // }
       },
       /**
        * Toggle song if space bar is pressed
